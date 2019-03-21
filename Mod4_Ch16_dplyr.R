@@ -41,3 +41,31 @@ class(sleepData)
 
 # Retorna conjunto de dados baseado em condição
 
+# Condição Simples
+
+filter(df_sono, sono_total>=10)
+
+# Condição Dupla
+filter(df_sono, sono_total>=10, peso>=80)
+
+# A função in - contido
+filter(df_sono, cidade %in% c("Recife", "Curitiba"))
+
+# Função arrange() - ordenar os dados
+# Caracter de concatenamento: pipe %>%
+
+# df_sono organizado pelo nome, concatenado com head
+df_sono %>% arrange(nome) %>% head
+
+# Organização em duas colunas: nome e sono_total também concatenados
+
+df_sono %>% select(nome, cidade, sono_total) %>% arrange(nome, sono_total)
+
+# select () +  arrange() + filter()
+
+df_sono %>%
+select(nome, cidade, sono_total) %>%
+arrange(cidade, sono_total) %>%
+filter(sono_total>=16)
+
+# 
