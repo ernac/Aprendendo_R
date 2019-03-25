@@ -68,4 +68,22 @@ select(nome, cidade, sono_total) %>%
 arrange(cidade, sono_total) %>%
 filter(sono_total>=16)
 
-# 
+# Arrange com ordem descrescent usando desc()
+
+df_sono %>%
+select(nome,cidade,sono_total) %>%
+arrange (desc(sono_total)) %>% 
+filter(sono_total>=16)
+
+# mutate para criar uma coluna temporária
+
+head(df_sono)
+df_sono %>% 
+mutate(novo_indice = sono_total/peso) %>% 
+head
+head(df_sono)
+
+df_sono %>% 
+mutate (novo_indice = sono_total/peso, peso_libras = peso/0.4535) %>%
+head
+
