@@ -87,3 +87,80 @@ df_sono %>%
 mutate (novo_indice = sono_total/peso, peso_libras = peso/0.4535) %>%
 head
 
+# Função summarise() - Resumir os dados numa única linha
+
+df_sono %>% 
+summarise (media.sono = mean(sono_total))
+
+df_sono %>% 
+summarise (
+media.sono = mean(sono_total), 
+min.sono = min(sono_total),
+max.sono = max(sono_total),
+total = n()
+)
+
+# group by - agrupamento de dados
+
+df_sono %>% 
+group_by (cidade) %>% 
+summarise (
+media.sono = mean(sono_total), 
+min.sono = min(sono_total),
+max.sono = max(sono_total),
+total = n()) %>% 
+arrange (desc(total))
+
+# Analisando os dados do pacote Flights
+
+install.packages("hflights")
+library(hflights)
+
+# Criando objeto do tipo tbl - dataframe do dplyr
+
+voos <- tbl_df(hflights)
+voos
+
+# Resumo de dados - exploração inicial
+
+str(voos)
+glimpse(voos)
+data.frame(head(voos))
+
+# Acessando ou filtrando - com colchetes e a função filter()
+
+voos[voos$Month == 1 & voos$DayofMonth == 1,]
+filter (voos, Month ==3, DayofMonth ==3)
+
+# Filtros múltiplos
+
+filter (voos, UniqueCarrier == "AA" | UniqueCarrier == "UA")
+filter (voos, UniqueCarrier %in% c("UA", "AA"))
+
+# Mais filtros mútiplos
+
+select (voos, Year:DayofMonth, contains("Taxi"), contains ("Delay"))
+
+# Usando operador concatenar para múltiplas visões
+
+voos %>% 
+select (UniqueCarrier, DepDelay) %>% 
+arrange(DepDelay)
+
+voos %>% 
+select(Distance, AirTime) %>%
+mutate (Speed =Distance/AirTime*60)
+
+# Variações para head()
+
+head(with( voos, tapply(ArrDelay, Dest, mean, na.rm = TRUE)))
+
+# Agregate
+
+head(aggregate (ArrDelay ~ Dest, voos, mean))
+
+# Tally
+
+voos %>% 
+group_by (Month, DayofMonth) %>% 
+tally (sort=T)
