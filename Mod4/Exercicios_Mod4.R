@@ -78,4 +78,4 @@ df3 %>%
 ggplot (aes(x=day, y=score)) +
 geom_point() +
 facet_wrap (~group) +
-geom_smooth (method ="lm", aes(group =1), se = F)    
+geom_smooth (method ="lm", aes(group =1), se = F)
