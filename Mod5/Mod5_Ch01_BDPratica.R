@@ -80,3 +80,30 @@ addADX (n=11, maType="EMA")
 # Cálculo de logs diários
 PETR4.SA.ret <- diff(log(PETR4.SA.Close), lag=1)
 
+# Remover os valores não disponíveis - NA
+
+PETR4.SA.ret <- PETR4.SA.ret [-1]
+
+#Plotagem da taxa de retorno com o a função plot
+
+plot (PETR4.SA.ret, 
+    main = "Fechamento das ações da Petrobrás",
+    col = "green", 
+    xlab ="Data", 
+    ylab = "Retorno", 
+    major.ticks = "months",
+    minor.ticks = FALSE)
+
+# Calculando algumas medidas estatísticas
+
+statNames <- c("Média","Desvio Padrão","Assimetria","Curtose")
+PETR4.SA.stats <- c(mean(PETR4.SA.ret), sd(PETR4.SA.ret),skewness(PETR4.SA.ret), kurtosis (PETR4.SA.ret))
+names (PETR4.SA.stats) <- statNames
+PETR4.SA.stats 
+
+# Salvando os dados em arquivo .rds - arquivo em formato binário do R
+getSymbols("PETR4.SA"m src='yahoo')
+saveRDS(PETR4.SA, file="PETR4.SA.rds")
+Ptr = readRDS("PETR4.SA.rds")
+dir()
+head(Ptr)
